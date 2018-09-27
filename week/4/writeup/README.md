@@ -14,6 +14,10 @@ Digital acknowledgement of honor pledge: Anand Raghu
 Flag - CMSC389R-{p1ng_as_a_$erv1c3}
 Input - ;cat /home/flag.txt
 Suggestions - blacklist certain characters such as ';' '&' from input, or better yet, escape all potentially malevolent characters.
+The right flag is as follows: CMSC389R-{p1ng_as_a_$erv1c3}. After the hint about command injection, I was fairly confident that a basic approach to finding the flag was all that was required. I 
+simply put a semi-colon and then other exploratory commands after to find the flag in the home dir. Specifically, I used `;cat /home/flag.txt`.
+
+
 *Put your writeup >= 300 words here in response to the part 1 prompt*
 
 ### Part 2 (55 pts)
