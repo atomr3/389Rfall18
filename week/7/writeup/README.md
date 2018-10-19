@@ -12,7 +12,7 @@ Digital acknowledgement of honor pledge: Anand Raghu
 
 ### Part 1 (40 pts)
 
-1. 
+1. JPEG image
 
 2. 
 
